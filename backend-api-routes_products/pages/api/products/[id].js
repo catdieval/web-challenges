@@ -1,8 +1,23 @@
-import { getProductById } from "/services/productServices.js";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
-export default function handler(request, response) {
-  if (request.method === "GET") {
-    const { id } = Number(request.query.id);
-    response.status(200).json(getProductById(id));
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function DisplaySingleProduct() {
+  const router = useRouter();
+  const { id } = router.query;
+  const { data, isLoading } = useSWR(`/api/products/${id}`, fetcher);
+
+  if (!data || isLoading) {
+    return "Loading...";
   }
+
+  const { name, description, price, currency, category } = data;
+  return (
+    <>
+      <p>
+        {name} {description} {price} {currency} {category}
+      </p>
+    </>
+  );
 }
