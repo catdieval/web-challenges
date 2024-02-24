@@ -12,11 +12,23 @@ export default function App({ Component, pageProps }) {
     return fruits.find((x) => x.id == id);
   }
 
+  function toggleFavorite(id) {
+    const favoriteFruits = fruits.map((item) => {
+      item.id === id ? { ...item, isFavorite: !item.isFavorite } : item;
+    });
+    setFruits(favoriteFruits);
+  }
+
   return (
     <>
       <Nav />
       <main>
-        <Component fruits={fruits} getFruit={getFruit} {...pageProps} />
+        <Component
+          fruits={fruits}
+          getFruit={getFruit}
+          toggleFavorite={toggleFavorite}
+          {...pageProps}
+        />
       </main>
       <Footer />
     </>

@@ -14,6 +14,8 @@ export default function IndexPage({ fruits }) {
           </li>
         ))}
       </ul>
+      <br></br>
+      <Link href={"/favorites"}>Favorites page</Link>
     </>
   );
 }
